@@ -688,7 +688,7 @@
                 if (this.getButtons().length === 0) {
                     this.getModalFooter().hide();
                 } else {
-                    this.getModalFooter().show().find('.' + this.getNamespace('footer')).html('').append(this.createFooterButtons());
+                    this.getModalFooter().show().closest('.modal-footer').html('').append(this.createFooterButtons());
                 }
             }
 
@@ -775,15 +775,12 @@
             return $message;
         },
         createFooterContent: function () {
-            var $container = $('<div></div>');
-            $container.addClass(this.getNamespace('footer'));
-
-            return $container;
+            return this.createFooterButtons();
         },
         createFooterButtons: function () {
             var that = this;
-            var $container = $('<div></div>');
-            $container.addClass(this.getNamespace('footer-buttons'));
+
+            var $buttons = [];
             this.indexedButtons = {};
             $.each(this.options.buttons, function (index, button) {
                 if (!button.id) {
@@ -791,10 +788,10 @@
                 }
                 var $button = that.createButton(button);
                 that.indexedButtons[button.id] = $button;
-                $container.append($button);
+                $buttons.push($button);
             });
 
-            return $container;
+            return $buttons;
         },
         createButton: function (button) {
             var $button = $('<button class="btn"></button>');
